@@ -1,0 +1,16 @@
+services:
+  gif-editor:
+    build: .
+    restart: unless-stopped
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.gif-editor.rule=Host(`gifedit.termg.com`)"
+      - "traefik.http.routers.gif-editor.entrypoints=websecure"
+      - "traefik.http.routers.gif-editor.tls.certresolver=letsencrypt"
+      - "traefik.http.services.gif-editor.loadbalancer.server.port=8080"
+
+networks:
+  traefik:
+    external: true
