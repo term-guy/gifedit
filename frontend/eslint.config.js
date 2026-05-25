@@ -5,6 +5,12 @@ import configPrettier from 'eslint-config-prettier'
 export default tseslint.config(
   { ignores: ['dist', 'public'] },
   ...tseslint.configs.recommended,
+  {
+    files: ['**/*.cjs'],
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
+    },
+  },
   ...pluginVue.configs['flat/recommended'],
   {
     files: ['**/*.vue'],

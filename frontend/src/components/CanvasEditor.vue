@@ -276,7 +276,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="canvas-area" ref="canvasAreaRef" @wheel.prevent="onWheel" @mousemove="onMouseMoveArea" @mouseleave="onMouseLeaveArea">
+  <div ref="canvasAreaRef" class="canvas-area" @wheel.prevent="onWheel" @mousemove="onMouseMoveArea" @mouseleave="onMouseLeaveArea">
     <div class="canvas-scroll-area" @mousedown="onScrollAreaMouseDown">
       <div
         v-if="project"
@@ -285,9 +285,9 @@ onUnmounted(() => {
       >
         <!-- Konva host: never re-rendered after mount by using a stable wrapper -->
         <div
+          ref="konvaHostRef"
           class="konva-host"
           :style="wrapperStyle"
-          ref="konvaHostRef"
           @dragover.prevent
           @drop.prevent="onStickerDrop"
         >
@@ -332,7 +332,7 @@ onUnmounted(() => {
       <button class="zoom-btn" @click="editorStore.setZoom(editorStore.zoom - 0.1)">−</button>
       <span class="zoom-label">{{ zoomPercent }}%</span>
       <button class="zoom-btn" @click="editorStore.setZoom(editorStore.zoom + 0.1)">+</button>
-      <button class="zoom-btn" @click="editorStore.setZoom(1)" title="Reset zoom">↺</button>
+      <button class="zoom-btn" title="Reset zoom" @click="editorStore.setZoom(1)">↺</button>
     </div>
 
 

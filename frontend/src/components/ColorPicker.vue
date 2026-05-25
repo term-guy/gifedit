@@ -88,8 +88,8 @@ onUnmounted(() => { open.value = false })
       ref="swatchRef"
       class="cp-swatch"
       :style="{ background: modelValue }"
-      @click="toggleOpen"
       type="button"
+      @click="toggleOpen"
     />
     <span class="cp-hex">{{ modelValue }}</span>
 

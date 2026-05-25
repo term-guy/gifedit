@@ -132,8 +132,8 @@ function remove(id: string) {
           <span class="anim-meta">{{ anim.type }} · f{{ anim.startFrame + 1 }}–{{ anim.endFrame + 1 }}</span>
         </div>
         <div class="anim-actions">
-          <button class="icon-btn" @click="openEdit(anim)" title="Edit">✏</button>
-          <button class="icon-btn danger" @click="remove(anim.id)" title="Delete">✕</button>
+          <button class="icon-btn" title="Edit" @click="openEdit(anim)">✏</button>
+          <button class="icon-btn danger" title="Delete" @click="remove(anim.id)">✕</button>
         </div>
       </div>
     </div>
@@ -173,7 +173,7 @@ function remove(id: string) {
               </div>
               <div class="field">
                 <label>Size</label>
-                <input type="number" v-model.number="form.fontSize" min="8" max="200" />
+                <input v-model.number="form.fontSize" type="number" min="8" max="200" />
               </div>
               <div class="field">
                 <label>Color</label>
@@ -183,30 +183,30 @@ function remove(id: string) {
             <div class="field-row">
               <div class="field">
                 <label>X pos (0–1)</label>
-                <input type="number" v-model.number="form.x" min="0" max="1" step="0.05" />
+                <input v-model.number="form.x" type="number" min="0" max="1" step="0.05" />
               </div>
               <div class="field">
                 <label>Y pos (0–1)</label>
-                <input type="number" v-model.number="form.y" min="0" max="1" step="0.05" />
+                <input v-model.number="form.y" type="number" min="0" max="1" step="0.05" />
               </div>
             </div>
             <div class="field-row">
               <div class="field">
                 <label>Start frame</label>
-                <input type="number" v-model.number="form.startFrame" min="1" :max="totalFrames" />
+                <input v-model.number="form.startFrame" type="number" min="1" :max="totalFrames" />
               </div>
               <div class="field">
                 <label>End frame</label>
                 <input
-                  type="number"
                   v-model.number="form.endFrame"
+                  type="number"
                   :min="form.startFrame"
                   :max="totalFrames"
                   :disabled="keepUntilEnd"
                   :placeholder="keepUntilEnd ? String(totalFrames) : undefined"
                 />
                 <label class="keep-until-end-label">
-                  <input type="checkbox" v-model="keepUntilEnd" />
+                  <input v-model="keepUntilEnd" type="checkbox" />
                   Keep until final frame
                 </label>
               </div>
@@ -234,11 +234,11 @@ function remove(id: string) {
               <div class="field-row">
                 <div class="field">
                   <label>Start X/Y (0–1)</label>
-                  <input type="number" v-model.number="form.panStartX" min="0" max="2" step="0.05" />
+                  <input v-model.number="form.panStartX" type="number" min="0" max="2" step="0.05" />
                 </div>
                 <div class="field">
                   <label>End X/Y (0–1)</label>
-                  <input type="number" v-model.number="form.panEndX" min="0" max="2" step="0.05" />
+                  <input v-model.number="form.panEndX" type="number" min="0" max="2" step="0.05" />
                 </div>
               </div>
             </template>

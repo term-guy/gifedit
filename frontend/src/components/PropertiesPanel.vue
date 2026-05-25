@@ -51,7 +51,7 @@ function updateSelectedFrameDuration(e: Event) {
       </div>
       <div class="prop-group">
         <label>Brush size <span class="mono">{{ editorStore.brushSize }}px</span></label>
-        <input type="range" min="1" max="80" v-model.number="editorStore.brushSize" class="range" />
+        <input v-model.number="editorStore.brushSize" type="range" min="1" max="80" class="range" />
       </div>
     </template>
 
@@ -59,7 +59,7 @@ function updateSelectedFrameDuration(e: Event) {
     <template v-else-if="tool === 'erase'">
       <div class="prop-group">
         <label>Eraser size <span class="mono">{{ editorStore.eraserSize }}px</span></label>
-        <input type="range" min="2" max="120" v-model.number="editorStore.eraserSize" class="range" />
+        <input v-model.number="editorStore.eraserSize" type="range" min="2" max="120" class="range" />
       </div>
     </template>
 
@@ -71,7 +71,7 @@ function updateSelectedFrameDuration(e: Event) {
       </div>
       <div class="prop-group">
         <label>Tolerance <span class="mono">{{ fillTolerance ?? 15 }}</span></label>
-        <input type="range" min="0" max="128" v-model.number="fillTolerance" class="range" />
+        <input v-model.number="fillTolerance" type="range" min="0" max="128" class="range" />
       </div>
     </template>
 
@@ -90,11 +90,11 @@ function updateSelectedFrameDuration(e: Event) {
       </div>
       <div v-if="editorStore.shapeType === 'square'" class="prop-group">
         <label>Roundness <span class="mono">{{ editorStore.shapeCornerRadius }}px</span></label>
-        <input type="range" min="0" max="40" v-model.number="editorStore.shapeCornerRadius" class="range" />
+        <input v-model.number="editorStore.shapeCornerRadius" type="range" min="0" max="40" class="range" />
       </div>
       <div class="prop-group">
         <label class="checkbox-label">
-          <input type="checkbox" v-model="editorStore.shapeStroke" />
+          <input v-model="editorStore.shapeStroke" type="checkbox" />
           <span>Stroke</span>
         </label>
       </div>
@@ -105,7 +105,7 @@ function updateSelectedFrameDuration(e: Event) {
         </div>
         <div class="prop-group">
           <label>Stroke width <span class="mono">{{ editorStore.shapeStrokeWidth }}px</span></label>
-          <input type="range" min="1" max="20" v-model.number="editorStore.shapeStrokeWidth" class="range" />
+          <input v-model.number="editorStore.shapeStrokeWidth" type="range" min="1" max="20" class="range" />
         </div>
       </template>
     </template>
@@ -127,7 +127,7 @@ function updateSelectedFrameDuration(e: Event) {
       </div>
       <div class="prop-group">
         <label>Size <span class="mono">{{ editorStore.textConfig.fontSize }}px</span></label>
-        <input type="range" min="8" max="200" v-model.number="editorStore.textConfig.fontSize" class="range" />
+        <input v-model.number="editorStore.textConfig.fontSize" type="range" min="8" max="200" class="range" />
       </div>
       <div class="prop-group">
         <label>Color</label>
@@ -135,11 +135,11 @@ function updateSelectedFrameDuration(e: Event) {
       </div>
       <div class="prop-group row">
         <label class="checkbox-label">
-          <input type="checkbox" v-model="editorStore.textConfig.bold" />
+          <input v-model="editorStore.textConfig.bold" type="checkbox" />
           <span><strong>B</strong></span>
         </label>
         <label class="checkbox-label">
-          <input type="checkbox" v-model="editorStore.textConfig.italic" />
+          <input v-model="editorStore.textConfig.italic" type="checkbox" />
           <span><em>I</em></span>
         </label>
       </div>
@@ -151,11 +151,11 @@ function updateSelectedFrameDuration(e: Event) {
       <template v-if="konva.hasSelection.value && (konva.selectedNodeKind.value === 'rect' || konva.selectedNodeKind.value === 'circle')">
         <div class="prop-group">
           <label>Fill</label>
-          <ColorPicker :modelValue="konva.selectedNodeFill.value" @update:modelValue="konva.updateSelectedFill" />
+          <ColorPicker :model-value="konva.selectedNodeFill.value" @update:model-value="konva.updateSelectedFill" />
         </div>
         <div v-if="konva.selectedNodeKind.value === 'rect' && konva.selectedNodeShapeType.value === 'square'" class="prop-group">
           <label>Roundness <span class="mono">{{ konva.selectedNodeCornerRadius.value }}px</span></label>
-          <input type="range" min="0" max="40" :value="konva.selectedNodeCornerRadius.value" @input="konva.updateSelectedCornerRadius(+($event.target as HTMLInputElement).value)" class="range" />
+          <input type="range" min="0" max="40" :value="konva.selectedNodeCornerRadius.value" class="range" @input="konva.updateSelectedCornerRadius(+($event.target as HTMLInputElement).value)" />
         </div>
         <div class="prop-group">
           <label class="checkbox-label">
@@ -166,11 +166,11 @@ function updateSelectedFrameDuration(e: Event) {
         <template v-if="konva.selectedNodeStroke.value">
           <div class="prop-group">
             <label>Stroke color</label>
-            <ColorPicker :modelValue="konva.selectedNodeStrokeColor.value" @update:modelValue="konva.updateSelectedStrokeColor" />
+            <ColorPicker :model-value="konva.selectedNodeStrokeColor.value" @update:model-value="konva.updateSelectedStrokeColor" />
           </div>
           <div class="prop-group">
             <label>Stroke width <span class="mono">{{ konva.selectedNodeStrokeWidth.value }}px</span></label>
-            <input type="range" min="1" max="20" :value="konva.selectedNodeStrokeWidth.value" @input="konva.updateSelectedStrokeWidth(+($event.target as HTMLInputElement).value)" class="range" />
+            <input type="range" min="1" max="20" :value="konva.selectedNodeStrokeWidth.value" class="range" @input="konva.updateSelectedStrokeWidth(+($event.target as HTMLInputElement).value)" />
           </div>
         </template>
       </template>
@@ -179,7 +179,7 @@ function updateSelectedFrameDuration(e: Event) {
       <template v-else-if="konva.hasSelection.value && konva.selectedNodeKind.value === 'text'">
         <div class="prop-group">
           <label>Font</label>
-          <select :value="konva.selectedNodeFontFamily.value" @change="konva.updateSelectedFontFamily(($event.target as HTMLSelectElement).value)" class="select">
+          <select :value="konva.selectedNodeFontFamily.value" class="select" @change="konva.updateSelectedFontFamily(($event.target as HTMLSelectElement).value)">
             <option>DM Sans</option>
             <option>Sora</option>
             <option>Georgia</option>
@@ -192,11 +192,11 @@ function updateSelectedFrameDuration(e: Event) {
         </div>
         <div class="prop-group">
           <label>Size <span class="mono">{{ konva.selectedNodeFontSize.value }}px</span></label>
-          <input type="range" min="8" max="200" :value="konva.selectedNodeFontSize.value" @input="konva.updateSelectedFontSize(+($event.target as HTMLInputElement).value)" class="range" />
+          <input type="range" min="8" max="200" :value="konva.selectedNodeFontSize.value" class="range" @input="konva.updateSelectedFontSize(+($event.target as HTMLInputElement).value)" />
         </div>
         <div class="prop-group">
           <label>Color</label>
-          <ColorPicker :modelValue="konva.selectedNodeFill.value" @update:modelValue="konva.updateSelectedFill" />
+          <ColorPicker :model-value="konva.selectedNodeFill.value" @update:model-value="konva.updateSelectedFill" />
         </div>
         <div class="prop-group row">
           <label class="checkbox-label">
@@ -214,11 +214,11 @@ function updateSelectedFrameDuration(e: Event) {
       <template v-else-if="konva.hasSelection.value && konva.selectedNodeKind.value === 'line'">
         <div class="prop-group">
           <label>Color</label>
-          <ColorPicker :modelValue="konva.selectedNodeStrokeColor.value" @update:modelValue="konva.updateSelectedStrokeColor" />
+          <ColorPicker :model-value="konva.selectedNodeStrokeColor.value" @update:model-value="konva.updateSelectedStrokeColor" />
         </div>
         <div class="prop-group">
           <label>Width <span class="mono">{{ konva.selectedNodeStrokeWidth.value }}px</span></label>
-          <input type="range" min="1" max="80" :value="konva.selectedNodeStrokeWidth.value" @input="konva.updateSelectedStrokeWidth(+($event.target as HTMLInputElement).value)" class="range" />
+          <input type="range" min="1" max="80" :value="konva.selectedNodeStrokeWidth.value" class="range" @input="konva.updateSelectedStrokeWidth(+($event.target as HTMLInputElement).value)" />
         </div>
       </template>
 
