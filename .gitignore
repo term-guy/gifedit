@@ -29,6 +29,11 @@ frontend/coverage/
 frontend/.vite/
 frontend/*.tsbuildinfo
 
+# Playwright test output
+frontend/test-results/
+frontend/playwright-report/
+frontend/blob-report/
+
 # Backend runtime / build output
 backend/tmp/
 backend/storage/

@@ -89,7 +89,10 @@ export function useKonvaEditor() {
 
     watch(
       () => editorStore.activeTool,
-      (tool) => { ks.drawLayer?.listening(tool === 'select') },
+      (tool) => {
+        ks.drawLayer?.listening(tool === 'select')
+        if (tool === 'select') ks.drawLayer?.batchDraw()
+      },
       { immediate: true },
     )
   }

@@ -20,6 +20,7 @@ export function useKonvaDrawTools() {
     configureTransformerForNode,
     updateSelectionOutline,
     pushCanvasSnapshot,
+    populateSelectedNodeState,
   } = useKonvaSelection()
 
   function schedule() { scheduleSerialize(gifStore, ks.selectionOutline) }
@@ -293,6 +294,7 @@ export function useKonvaDrawTools() {
     hasSelection.value = true
     ks.drawLayer.draw()
     textPlacementPos.value = null
+    populateSelectedNodeState(textNode)
     editorStore.setTool('select')
     flush()
   }
