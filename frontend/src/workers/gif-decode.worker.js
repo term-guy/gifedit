@@ -11,6 +11,15 @@ self.onmessage = async (e) => {
   const { buffer, filename } = e.data
 
   try {
+    // Validate GIF magic bytes (GIF87a or GIF89a)
+    const header = new Uint8Array(buffer, 0, 6)
+    const sig = String.fromCharCode(header[0], header[1], header[2])
+    const ver = String.fromCharCode(header[3], header[4], header[5])
+    if (sig !== 'GIF' || (ver !== '87a' && ver !== '89a')) {
+      self.postMessage({ type: 'error', message: 'Not a valid GIF file' })
+      return
+    }
+
     const gif = parseGIF(buffer)
     const width = gif.lsd.width
     const height = gif.lsd.height
@@ -27,9 +36,13 @@ self.onmessage = async (e) => {
       const { dims, patch, disposalType, delay } = frame
 
       for (let y = 0; y < dims.height; y++) {
+        const dstY = dims.top + y
+        if (dstY < 0 || dstY >= height) continue
         for (let x = 0; x < dims.width; x++) {
+          const dstX = dims.left + x
+          if (dstX < 0 || dstX >= width) continue
           const srcIdx = (y * dims.width + x) * 4
-          const dstIdx = ((dims.top + y) * width + (dims.left + x)) * 4
+          const dstIdx = (dstY * width + dstX) * 4
           const a = patch[srcIdx + 3]
           if (a > 0) {
             composed[dstIdx] = patch[srcIdx]
@@ -44,8 +57,12 @@ self.onmessage = async (e) => {
 
       if (disposalType === 2) {
         for (let y = 0; y < dims.height; y++) {
+          const dstY = dims.top + y
+          if (dstY < 0 || dstY >= height) continue
           for (let x = 0; x < dims.width; x++) {
-            const dstIdx = ((dims.top + y) * width + (dims.left + x)) * 4
+            const dstX = dims.left + x
+            if (dstX < 0 || dstX >= width) continue
+            const dstIdx = (dstY * width + dstX) * 4
             composed[dstIdx] = 0
             composed[dstIdx + 1] = 0
             composed[dstIdx + 2] = 0
